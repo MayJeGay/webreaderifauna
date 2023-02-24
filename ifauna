@@ -1,0 +1,39 @@
+import requests
+from bs4 import BeautifulSoup
+
+page = requests.get('https://www.ifauna.cz/bezobratli/inzerce/kudlanky/prodam')
+soup = BeautifulSoup(page.content, 'html.parser')
+
+jmeno = soup.find(class_='if-box__heading-title')
+cena = soup.find(class_='if-box__price')
+popis = soup.find(class_='if-box__excerpt if-box__excerpt--v2')
+kod = soup.find(class_='if-box--with-thumb if-box')
+
+
+
+if jmeno:
+    jmeno_text = jmeno.text.strip()
+    print("Název produktu: ", jmeno_text, "Kudlanky")
+else:
+    print("Název produktu nebyl nalezen.")
+
+
+if cena:
+    cena_text = cena.text.strip()
+    print("Cena: ",cena_text)
+else:
+    print("Cena nebyla nalezena.")
+
+
+if popis:
+    popis_text = popis.text.strip()
+    print("Popis: ", popis_text)
+else:
+    print("Popis nebyl nalezen.")
+
+
+if kod:
+    kod_text = kod.text.strip()
+    print(kod_text)
+else:
+    print("Kod produktu nebyl nalezen")
